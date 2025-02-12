@@ -26,7 +26,11 @@ app = FastAPI()
 
 @app.get("/api/fruits",status_code=200)
 async def get_fruits():
-    return fruits
+    available_fruits = []
+    for fruit in fruits:
+         if fruit.available == True:
+              available_fruits.append(fruit)
+    return available_fruits
 
 @app.get("/api/fruits/{id}",status_code=200)
 async def get_fruit():
@@ -38,7 +42,10 @@ async def get_fruit():
 
 @app.post("/api/fruits",status_code=201)
 async def add_fruit(fruit:Fruit):
-    fruits.append(fruit)
+    if fruit.name and fruit.variety and fruit.quantity and fruit.supplier and fruit.harvest_date and fruit.availability and fruit.price 
+       fruits.append(fruit)
+    else:
+       raise HTTPException(status_code=400, detail="Missing field")
 
 @app.patch("/api/fruits/{id}",status_code=201)
 async def update_fruit(f:Fruit_Update, id:UUID):
